@@ -1,0 +1,148 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Typography, Button, Grid, Card, CardContent, Box } from '@mui/material';
+import { Restaurant, LocalShipping, Phone, Smartphone } from '@mui/icons-material';
+
+function Home() {
+  const features = [
+    {
+      icon: <Restaurant sx={{ fontSize: 60, color: '#FF6B35' }} />,
+      title: 'Wide Selection',
+      description: 'Choose from French fries, samosas, fresh juice, pizza, and ice cream'
+    },
+    {
+      icon: <LocalShipping sx={{ fontSize: 60, color: '#FF6B35' }} />,
+      title: 'Fast Delivery',
+      description: 'Quick delivery across Bungoma County within 30-45 minutes'
+    },
+    {
+      icon: <Phone sx={{ fontSize: 60, color: '#FF6B35' }} />,
+      title: 'Easy Ordering',
+      description: 'Order via app, website, phone, or WhatsApp'
+    },
+    {
+      icon: <Smartphone sx={{ fontSize: 60, color: '#FF6B35' }} />,
+      title: 'M-Pesa Payment',
+      description: 'Secure payment through M-Pesa or cash on delivery'
+    }
+  ];
+
+  return (
+    <Container maxWidth="lg">
+      {/* Hero Section */}
+      <Box sx={{ textAlign: 'center', py: 8 }}>
+        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
+          Welcome to BungoEats
+        </Typography>
+        <Typography variant="h5" color="text.secondary" paragraph>
+          Bungoma County's Premier Food Delivery Service
+        </Typography>
+        <Typography variant="body1" color="text.secondary" paragraph sx={{ maxWidth: 600, mx: 'auto', mb: 4 }}>
+          Delicious food from your favorite local restaurants, delivered right to your doorstep.
+          Fresh, fast, and convenient!
+        </Typography>
+        <Button
+          component={Link}
+          to="/menu"
+          variant="contained"
+          size="large"
+          sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
+        >
+          Order Now
+        </Button>
+      </Box>
+
+      {/* Features Section */}
+      <Box sx={{ py: 6 }}>
+        <Typography variant="h4" align="center" gutterBottom sx={{ mb: 4, fontWeight: 'bold' }}>
+          Why Choose BungoEats?
+        </Typography>
+        <Grid container spacing={4}>
+          {features.map((feature, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Card sx={{ height: '100%', textAlign: 'center', p: 2 }}>
+                <CardContent>
+                  <Box sx={{ mb: 2 }}>
+                    {feature.icon}
+                  </Box>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {feature.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* Popular Items Section */}
+      <Box sx={{ py: 6, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom sx={{ mb: 4, fontWeight: 'bold' }}>
+          Popular Items
+        </Typography>
+        <Grid container spacing={3}>
+          {[
+            { name: 'French Fries', emoji: '🍟' },
+            { name: 'Samosas', emoji: '🥟' },
+            { name: 'Fresh Juice', emoji: '🥤' },
+            { name: 'Pizza', emoji: '🍕' },
+            { name: 'Ice Cream', emoji: '🍦' }
+          ].map((item, index) => (
+            <Grid item xs={6} sm={4} md={2.4} key={index}>
+              <Card sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 6 } }}>
+                <Typography variant="h1" sx={{ fontSize: '3rem' }}>
+                  {item.emoji}
+                </Typography>
+                <Typography variant="h6" sx={{ mt: 1 }}>
+                  {item.name}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Button
+          component={Link}
+          to="/menu"
+          variant="outlined"
+          size="large"
+          sx={{ mt: 4 }}
+        >
+          View Full Menu
+        </Button>
+      </Box>
+
+      {/* Call to Action */}
+      <Box sx={{ py: 6, textAlign: 'center', bgcolor: '#f5f5f5', borderRadius: 2, my: 4 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Ready to Order?
+        </Typography>
+        <Typography variant="body1" color="text.secondary" paragraph>
+          Join thousands of satisfied customers in Bungoma County
+        </Typography>
+        <Button
+          component={Link}
+          to="/register"
+          variant="contained"
+          color="secondary"
+          size="large"
+          sx={{ mr: 2 }}
+        >
+          Sign Up
+        </Button>
+        <Button
+          component={Link}
+          to="/login"
+          variant="outlined"
+          size="large"
+        >
+          Login
+        </Button>
+      </Box>
+    </Container>
+  );
+}
+
+export default Home;
