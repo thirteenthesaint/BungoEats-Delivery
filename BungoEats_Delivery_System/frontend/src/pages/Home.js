@@ -43,7 +43,7 @@ function Home() {
         </Typography>
         <Button
           component={Link}
-          to="/menu"
+          to="/restaurants"
           variant="contained"
           size="large"
           sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
@@ -105,7 +105,7 @@ function Home() {
         </Grid>
         <Button
           component={Link}
-          to="/menu"
+          to="/restaurants"
           variant="outlined"
           size="large"
           sx={{ mt: 4 }}
