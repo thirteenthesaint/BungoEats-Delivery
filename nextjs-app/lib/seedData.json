@@ -1,0 +1,131 @@
+{
+  "categories": [
+    { "id": "breakfast", "name": "Breakfast", "slug": "breakfast" },
+    { "id": "mains", "name": "Mains", "slug": "mains" },
+    { "id": "grill", "name": "Grill", "slug": "grill" },
+    { "id": "pizza", "name": "Pizza", "slug": "pizza" },
+    { "id": "burgers", "name": "Burgers", "slug": "burgers" },
+    { "id": "sides", "name": "Sides", "slug": "sides" },
+    { "id": "drinks", "name": "Drinks", "slug": "drinks" },
+    { "id": "kenyan", "name": "Kenyan Staples", "slug": "kenyan" },
+    { "id": "biryani", "name": "Biryani", "slug": "biryani" },
+    { "id": "chinese", "name": "Chinese", "slug": "chinese" },
+    { "id": "desserts", "name": "Desserts", "slug": "desserts" }
+  ],
+  "restaurants": [
+    {
+      "id": "noor",
+      "name": "Noor Restaurant Bungoma",
+      "rating": 4.2,
+      "status": "open",
+      "phone": "+254748882269",
+      "address": "HHV7+9X9, Eldoret-Malaba Hwy, Bungoma",
+      "priceLevel": "KES 500-1,000",
+      "tags": ["Breakfast", "Kenyan Staples", "Mains"],
+      "description": "Popular restaurant serving authentic Kenyan cuisine and breakfast favorites",
+      "menu": [
+        { "id": "noor-m1", "categoryId": "breakfast", "name": "Tea + Mandazi", "description": "Kenyan tea served with fresh mandazi", "price": 120, "available": true },
+        { "id": "noor-m2", "categoryId": "breakfast", "name": "Chapati + Beans", "description": "Soft chapati with spiced beans", "price": 150, "available": true },
+        { "id": "noor-m3", "categoryId": "mains", "name": "Chapati + Beef Stew", "description": "Flatbread with tender beef stew", "price": 350, "available": true },
+        { "id": "noor-m4", "categoryId": "kenyan", "name": "Ugali + Sukuma Wiki + Beef", "description": "Traditional Kenyan meal", "price": 400, "available": true },
+        { "id": "noor-m5", "categoryId": "mains", "name": "Pilau + Chicken", "description": "Spiced rice with chicken", "price": 450, "available": true },
+        { "id": "noor-m6", "categoryId": "drinks", "name": "Fresh Juice", "description": "Passion, mango, or mixed fruit", "price": 150, "available": true }
+      ]
+    },
+    {
+      "id": "tuutis",
+      "name": "Tuutis Restaurant",
+      "rating": 4.2,
+      "status": "open",
+      "phone": "+254790368850",
+      "address": "Kenya Industrial Estates, Bungoma-Mumias Rd",
+      "priceLevel": "KES 500-1,000",
+      "tags": ["Biryani", "Grill", "Kenyan Staples"],
+      "description": "Famous for biryani and grilled meats",
+      "menu": [
+        { "id": "tuutis-m1", "categoryId": "biryani", "name": "Chicken Biryani", "description": "Aromatic rice with spiced chicken", "price": 550, "available": true },
+        { "id": "tuutis-m2", "categoryId": "biryani", "name": "Beef Biryani", "description": "Fragrant rice with tender beef", "price": 600, "available": true },
+        { "id": "tuutis-m3", "categoryId": "grill", "name": "Nyama Choma Plate", "description": "Grilled beef with chips & kachumbari", "price": 700, "available": true },
+        { "id": "tuutis-m4", "categoryId": "grill", "name": "Chicken Tikka", "description": "Marinated grilled chicken pieces", "price": 500, "available": true },
+        { "id": "tuutis-m5", "categoryId": "sides", "name": "Masala Chips", "description": "Spiced fried potatoes", "price": 180, "available": true },
+        { "id": "tuutis-m6", "categoryId": "drinks", "name": "Mango Lassi", "description": "Refreshing yogurt drink", "price": 200, "available": true }
+      ]
+    },
+    {
+      "id": "snackit",
+      "name": "SnackIt! - Taste the Goodness",
+      "rating": 4.5,
+      "status": "open",
+      "phone": "+254700000000",
+      "address": "Bungoma Town, Main Street",
+      "priceLevel": "KES 200-500",
+      "tags": ["Burgers", "Sides", "Drinks"],
+      "description": "Quick bites and snacks delivered fast",
+      "menu": [
+        { "id": "snackit-m1", "categoryId": "burgers", "name": "Smocha", "description": "Chapati wrapped sausage with veggies", "price": 150, "available": true },
+        { "id": "snackit-m2", "categoryId": "burgers", "name": "Shawarma", "description": "Chicken shawarma wrap", "price": 250, "available": true },
+        { "id": "snackit-m3", "categoryId": "grill", "name": "Mushkaki", "description": "Grilled meat skewers", "price": 200, "available": true },
+        { "id": "snackit-m4", "categoryId": "desserts", "name": "Yoghurt", "description": "Fresh fruit yoghurt", "price": 120, "available": true },
+        { "id": "snackit-m5", "categoryId": "drinks", "name": "Fresh Juice", "description": "Orange, passion, or mango", "price": 150, "available": true },
+        { "id": "snackit-m6", "categoryId": "sides", "name": "French Fries", "description": "Crispy golden fries", "price": 150, "available": true }
+      ]
+    },
+    {
+      "id": "pizza-inn",
+      "name": "Pizza Inn Bungoma",
+      "rating": 4.3,
+      "status": "open",
+      "phone": "+254720000000",
+      "address": "Bungoma Town Center",
+      "priceLevel": "KES 800-2,000",
+      "tags": ["Pizza", "Burgers", "Sides"],
+      "description": "International pizza chain with local favorites",
+      "menu": [
+        { "id": "pizza-m1", "categoryId": "pizza", "name": "Margherita Pizza", "description": "Classic tomato and mozzarella", "price": 850, "available": true },
+        { "id": "pizza-m2", "categoryId": "pizza", "name": "Pepperoni Pizza", "description": "Loaded with pepperoni", "price": 1200, "available": true },
+        { "id": "pizza-m3", "categoryId": "pizza", "name": "BBQ Chicken Pizza", "description": "BBQ sauce with grilled chicken", "price": 1300, "available": true },
+        { "id": "pizza-m4", "categoryId": "burgers", "name": "Beef Burger", "description": "Juicy beef patty with cheese", "price": 600, "available": true },
+        { "id": "pizza-m5", "categoryId": "sides", "name": "Chicken Wings", "description": "Spicy or BBQ wings", "price": 500, "available": true },
+        { "id": "pizza-m6", "categoryId": "drinks", "name": "Soft Drinks", "description": "Coke, Fanta, Sprite", "price": 100, "available": true }
+      ]
+    },
+    {
+      "id": "golden-palace",
+      "name": "Golden Palace Chinese Restaurant",
+      "rating": 4.0,
+      "status": "open",
+      "phone": "+254730000000",
+      "address": "Mumias Road, Bungoma",
+      "priceLevel": "KES 600-1,500",
+      "tags": ["Chinese", "Mains", "Sides"],
+      "description": "Authentic Chinese cuisine in Bungoma",
+      "menu": [
+        { "id": "golden-m1", "categoryId": "chinese", "name": "Fried Rice", "description": "Chicken or beef fried rice", "price": 500, "available": true },
+        { "id": "golden-m2", "categoryId": "chinese", "name": "Chow Mein", "description": "Stir-fried noodles", "price": 550, "available": true },
+        { "id": "golden-m3", "categoryId": "chinese", "name": "Sweet & Sour Chicken", "description": "Crispy chicken in sweet sauce", "price": 700, "available": true },
+        { "id": "golden-m4", "categoryId": "chinese", "name": "Spring Rolls", "description": "Crispy vegetable rolls", "price": 300, "available": true },
+        { "id": "golden-m5", "categoryId": "mains", "name": "Beef in Black Bean Sauce", "description": "Tender beef with vegetables", "price": 800, "available": true },
+        { "id": "golden-m6", "categoryId": "drinks", "name": "Chinese Tea", "description": "Traditional green tea", "price": 150, "available": true }
+      ]
+    },
+    {
+      "id": "kfc-bungoma",
+      "name": "KFC Bungoma",
+      "rating": 4.4,
+      "status": "open",
+      "phone": "+254740000000",
+      "address": "Bungoma Town, Moi Avenue",
+      "priceLevel": "KES 400-1,200",
+      "tags": ["Burgers", "Sides", "Mains"],
+      "description": "World-famous fried chicken",
+      "menu": [
+        { "id": "kfc-m1", "categoryId": "mains", "name": "2 Piece Chicken", "description": "Original or spicy chicken", "price": 450, "available": true },
+        { "id": "kfc-m2", "categoryId": "burgers", "name": "Zinger Burger", "description": "Spicy chicken burger", "price": 500, "available": true },
+        { "id": "kfc-m3", "categoryId": "burgers", "name": "Colonel Burger", "description": "Classic chicken burger", "price": 450, "available": true },
+        { "id": "kfc-m4", "categoryId": "sides", "name": "Chips (Regular)", "description": "Crispy french fries", "price": 150, "available": true },
+        { "id": "kfc-m5", "categoryId": "sides", "name": "Coleslaw", "description": "Fresh cabbage salad", "price": 100, "available": true },
+        { "id": "kfc-m6", "categoryId": "drinks", "name": "Pepsi (500ml)", "description": "Chilled soft drink", "price": 100, "available": true }
+      ]
+    }
+  ]
+}

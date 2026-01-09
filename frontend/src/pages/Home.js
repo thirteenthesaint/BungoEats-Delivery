@@ -1,4 +1,75 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My HTML Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        main {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+            color: #666;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+    </header>
+    
+    <main>
+        <h2>About This Page</h2>
+        <p>This is a basic HTML document with some styling. You can customize this template to create your own web page.</p>
+        
+        <h2>Features</h2>
+        <ul>
+            <li>Clean and modern design</li>
+            <li>Responsive layout</li>
+            <li>Easy to customize</li>
+            <li>Built with HTML and CSS</li>
+        </ul>
+        
+        <h2>Get Started</h2>
+        <p>Edit this HTML file to add your own content, images, and links. You can modify the styles in the &lt;style&gt; section to change colors, fonts, and layout.</p>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 My Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Typography, Button, Grid, Card, CardContent, Box, Chip } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';

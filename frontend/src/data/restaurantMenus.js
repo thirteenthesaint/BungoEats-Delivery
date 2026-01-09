@@ -238,5 +238,114 @@ export const restaurantMenus = {
       { id: 1708, name: 'Milkshake', price: 280, category: 'Fresh Drinks', description: 'Thick shake' },
       { id: 1709, name: 'Smoothie', price: 250, category: 'Fresh Drinks', description: 'Fruit smoothie' },
     ]
+  },
+  18: { // Ekero Choma Place
+    name: 'Ekero Choma Place',
+    emoji: '🔥',
+    menu: [
+      { id: 1801, name: 'Nyama Choma (Goat)', price: 600, category: 'Local Meals', description: 'Grilled goat meat' },
+      { id: 1802, name: 'Nyama Choma (Beef)', price: 550, category: 'Local Meals', description: 'Grilled beef' },
+      { id: 1803, name: 'Grilled Chicken', price: 500, category: 'Quick Meals', description: 'Charcoal grilled chicken' },
+      { id: 1804, name: 'Chips', price: 150, category: 'Street Food', description: 'Crispy fries' },
+      { id: 1805, name: 'Kachumbari', price: 100, category: 'Street Food', description: 'Fresh salad' },
+      { id: 1806, name: 'Ugali', price: 80, category: 'Local Meals', description: 'Traditional ugali' },
+      { id: 1807, name: 'Soda', price: 80, category: 'Fresh Drinks', description: 'Cold soda' },
+    ]
+  },
+  19: { // Kivuli Resort
+    name: 'Kivuli Resort',
+    emoji: '🌴',
+    menu: [
+      { id: 1901, name: 'Continental Breakfast', price: 450, category: 'Quick Meals', description: 'Full breakfast' },
+      { id: 1902, name: 'Grilled Fish', price: 550, category: 'Local Meals', description: 'Fresh grilled fish' },
+      { id: 1903, name: 'Chicken Curry', price: 400, category: 'Local Meals', description: 'Spiced curry' },
+      { id: 1904, name: 'Beef Stew & Rice', price: 350, category: 'Local Meals', description: 'Hearty meal' },
+      { id: 1905, name: 'Vegetable Stir Fry', price: 300, category: 'Local Meals', description: 'Mixed vegetables' },
+      { id: 1906, name: 'Club Sandwich', price: 350, category: 'Quick Meals', description: 'Triple decker' },
+      { id: 1907, name: 'Fresh Juice', price: 180, category: 'Fresh Drinks', description: 'Natural juice' },
+      { id: 1908, name: 'Coffee', price: 150, category: 'Fresh Drinks', description: 'Hot coffee' },
+    ]
+  },
+  20: { // The Maritini Lounge and Garden Restaurant
+    name: 'The Maritini Lounge and Garden Restaurant',
+    emoji: '🌺',
+    menu: [
+      { id: 2001, name: 'Garden Salad', price: 300, category: 'Quick Meals', description: 'Fresh garden salad' },
+      { id: 2002, name: 'Grilled Chicken', price: 500, category: 'Quick Meals', description: 'Marinated chicken' },
+      { id: 2003, name: 'Fish & Chips', price: 450, category: 'Quick Meals', description: 'Crispy fish' },
+      { id: 2004, name: 'Beef Burger', price: 350, category: 'Quick Meals', description: 'Juicy burger' },
+      { id: 2005, name: 'Pasta Carbonara', price: 400, category: 'Local Meals', description: 'Creamy pasta' },
+      { id: 2006, name: 'Pizza (Medium)', price: 700, category: 'Pizza', description: 'Garden special pizza' },
+      { id: 2007, name: 'Fresh Juice', price: 180, category: 'Fresh Drinks', description: 'Fruit juice' },
+      { id: 2008, name: 'Smoothie', price: 250, category: 'Fresh Drinks', description: 'Blended smoothie' },
+    ]
+  },
+  21: { // Hunters Paradise Tuuti Restaurant
+    name: 'Hunters Paradise Tuuti Restaurant',
+    emoji: '🏞️',
+    menu: [
+      { id: 2101, name: 'Nyama Choma Platter', price: 700, category: 'Local Meals', description: 'Mixed grilled meats' },
+      { id: 2102, name: 'Grilled Tilapia', price: 550, category: 'Local Meals', description: 'Whole tilapia' },
+      { id: 2103, name: 'Chicken Biryani', price: 400, category: 'Local Meals', description: 'Aromatic rice' },
+      { id: 2104, name: 'Beef Steak', price: 600, category: 'Local Meals', description: 'Premium steak' },
+      { id: 2105, name: 'Vegetable Pilau', price: 250, category: 'Local Meals', description: 'Spiced rice' },
+      { id: 2106, name: 'Chapati (5pcs)', price: 150, category: 'Local Meals', description: 'Soft chapatis' },
+      { id: 2107, name: 'Fresh Juice', price: 180, category: 'Fresh Drinks', description: 'Natural juice' },
+      { id: 2108, name: 'Soda', price: 80, category: 'Fresh Drinks', description: 'Cold drink' },
+    ]
+  },
+  22: { // Milimani Resort
+    name: 'Milimani Resort',
+    emoji: '🏖️',
+    menu: [
+      { id: 2201, name: 'Resort Breakfast', price: 500, category: 'Quick Meals', description: 'Full breakfast buffet' },
+      { id: 2202, name: 'Grilled Chicken', price: 550, category: 'Quick Meals', description: 'Herb grilled chicken' },
+      { id: 2203, name: 'Fish Fillet', price: 500, category: 'Quick Meals', description: 'Pan-fried fish' },
+      { id: 2204, name: 'Beef Curry', price: 450, category: 'Local Meals', description: 'Spiced beef curry' },
+      { id: 2205, name: 'Vegetable Fried Rice', price: 300, category: 'Local Meals', description: 'Mixed fried rice' },
+      { id: 2206, name: 'Club Sandwich', price: 350, category: 'Quick Meals', description: 'Triple layer sandwich' },
+      { id: 2207, name: 'Fresh Juice', price: 200, category: 'Fresh Drinks', description: 'Premium juice' },
+      { id: 2208, name: 'Coffee', price: 150, category: 'Fresh Drinks', description: 'Brewed coffee' },
+    ]
+  },
+  23: { // Bungoma Tea Room
+    name: 'Bungoma Tea Room',
+    emoji: '🫖',
+    menu: [
+      { id: 2301, name: 'Kenyan Tea', price: 50, category: 'Fresh Drinks', description: 'Traditional tea' },
+      { id: 2302, name: 'Coffee', price: 100, category: 'Fresh Drinks', description: 'Hot coffee' },
+      { id: 2303, name: 'Mandazi (4pcs)', price: 80, category: 'Street Food', description: 'Sweet dough' },
+      { id: 2304, name: 'Samosa (3pcs)', price: 90, category: 'Street Food', description: 'Crispy samosas' },
+      { id: 2305, name: 'Chapati & Beans', price: 150, category: 'Local Meals', description: 'Simple meal' },
+      { id: 2306, name: 'Sausage Roll', price: 100, category: 'Street Food', description: 'Baked roll' },
+      { id: 2307, name: 'Fresh Juice', price: 120, category: 'Fresh Drinks', description: 'Fruit juice' },
+    ]
+  },
+  24: { // Zuri Place Bungoma
+    name: 'Zuri Place Bungoma',
+    emoji: '🍛',
+    menu: [
+      { id: 2401, name: 'Pilau', price: 250, category: 'Local Meals', description: 'Spiced rice' },
+      { id: 2402, name: 'Biryani', price: 300, category: 'Local Meals', description: 'Aromatic biryani' },
+      { id: 2403, name: 'Ugali & Sukuma', price: 150, category: 'Local Meals', description: 'Traditional dish' },
+      { id: 2404, name: 'Chicken Stew', price: 300, category: 'Local Meals', description: 'Home-style stew' },
+      { id: 2405, name: 'Beef Stew', price: 280, category: 'Local Meals', description: 'Tender beef' },
+      { id: 2406, name: 'Chapati (4pcs)', price: 120, category: 'Local Meals', description: 'Soft chapatis' },
+      { id: 2407, name: 'Samosa (5pcs)', price: 120, category: 'Street Food', description: 'Crispy samosas' },
+      { id: 2408, name: 'Fresh Juice', price: 150, category: 'Fresh Drinks', description: 'Natural juice' },
+    ]
+  },
+  25: { // Happy Moments Restaurant
+    name: 'Happy Moments Restaurant',
+    emoji: '😊',
+    menu: [
+      { id: 2501, name: 'Rice & Beans', price: 180, category: 'Local Meals', description: 'Traditional meal' },
+      { id: 2502, name: 'Chicken & Chips', price: 350, category: 'Quick Meals', description: 'Fried chicken' },
+      { id: 2503, name: 'Beef Burger', price: 280, category: 'Quick Meals', description: 'Juicy burger' },
+      { id: 2504, name: 'Fish & Chips', price: 380, category: 'Quick Meals', description: 'Fried fish' },
+      { id: 2505, name: 'Vegetable Stir Fry', price: 250, category: 'Local Meals', description: 'Mixed vegetables' },
+      { id: 2506, name: 'Chapati (3pcs)', price: 90, category: 'Local Meals', description: 'Soft chapatis' },
+      { id: 2507, name: 'Soda', price: 70, category: 'Fresh Drinks', description: 'Cold drink' },
+    ]
   }
 };
