@@ -17,7 +17,7 @@ function Menu() {
     { _id: 4, name: 'Samosas (3pc)', category: 'street-snacks', price: 60, description: 'Crispy triangular pastries with spiced meat or veggies', emoji: '🥟', available: true, popular: true },
     { _id: 5, name: 'Bhajias', category: 'street-snacks', price: 50, description: 'Potato fritters deep-fried in batter', emoji: '🥔', available: true, popular: true },
     { _id: 6, name: 'Smokie Pasua', category: 'street-snacks', price: 70, description: 'Split smoked sausage with kachumbari', emoji: '🌭', available: true, popular: true },
-    { _id: 7, name: 'Mshikaki (4 sticks)', category: 'street-snacks', price: 150, description: 'Spiced grilled meat skewers', emoji: '�串', available: true, popular: true },
+    { _id: 7, name: 'Mshikaki (4 sticks)', category: 'street-snacks', price: 150, description: 'Spiced grilled meat skewers', emoji: '🍢', available: true, popular: true },
     { _id: 8, name: 'Boiled Eggs with Kachumbari', category: 'street-snacks', price: 40, description: 'Protein-rich snack with fresh salad', emoji: '🥚', available: true, popular: false },
     
     // Quick Meals
