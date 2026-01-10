@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Category from '@/lib/models/Category';
 
@@ -6,7 +6,7 @@ import Category from '@/lib/models/Category';
  * GET /api/categories
  * Returns list of all categories
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: Request) {
   try {
     await connectDB();
 

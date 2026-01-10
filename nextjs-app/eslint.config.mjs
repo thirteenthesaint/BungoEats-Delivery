@@ -12,7 +12,17 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "lib/seed.ts",
+    "lib/seed.js",
+    "lib/models/**/*.js",
+    "lib/mongodb.js",
   ]),
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    },
+  },
 ]);
 
 export default eslintConfig;

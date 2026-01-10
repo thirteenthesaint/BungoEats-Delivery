@@ -70,15 +70,18 @@ export interface Customer {
 }
 
 export type OrderStatus = 
+  | 'pending'
   | 'placed' 
   | 'confirmed' 
   | 'preparing' 
+  | 'ready'
   | 'out_for_delivery' 
   | 'delivered' 
   | 'cancelled';
 
 export interface Order {
   id: string;
+  orderNumber: string;
   items: OrderItem[];
   customer: Customer;
   restaurantId: string;

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Restaurant from '@/lib/models/Restaurant';
 
@@ -10,54 +10,27 @@ import Restaurant from '@/lib/models/Restaurant';
  *   - category: string (optional) - filter by category tag
  *   - status: 'open' | 'closed' (optional) - filter by status
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     await connectDB();
 
-    const searchParams = request.nextUrl.searchParams;
-    const search = searchParams.get('search');
-    const category = searchParams.get('category');
-    const status = searchParams.get('status');
-
-    // Build query filter
-    const filter: any = {};
-
-    if (search) {
-      filter.name = { $regex: search, $options: 'i' };
-    }
-
-    if (category) {
-      filter.tags = category;
-    }
-
-    if (status) {
-      filter.status = status;
-    }
-
     // Fetch restaurants
-    const restaurants = await Restaurant.find(filter)
-      .select('_id name rating status phone address price_level tags description imageUrl')
+    const restaurants = await Restaurant.find({})
+      .select('_id name rating deliveryTime categories description image')
       .lean();
 
-    // Transform _id to id for cleaner API response
+    // Transform for frontend
     const transformedRestaurants = restaurants.map((restaurant: any) => ({
-      id: restaurant._id.toString(),
+      _id: restaurant._id.toString(),
       name: restaurant.name,
-      rating: restaurant.rating,
-      status: restaurant.status,
-      phone: restaurant.phone,
-      address: restaurant.address,
-      price_level: restaurant.price_level,
-      tags: restaurant.tags,
-      description: restaurant.description,
-      imageUrl: restaurant.imageUrl,
+      rating: restaurant.rating || 4.5,
+      deliveryTime: restaurant.deliveryTime || '30-45 min',
+      categories: restaurant.categories || [],
+      description: restaurant.description || '',
+      image: restaurant.image || restaurant.imageUrl || '/placeholder-restaurant.jpg',
     }));
 
-    return NextResponse.json({
-      success: true,
-      count: transformedRestaurants.length,
-      data: transformedRestaurants,
-    });
+    return NextResponse.json(transformedRestaurants);
   } catch (error: any) {
     console.error('Error fetching restaurants:', error);
     return NextResponse.json(

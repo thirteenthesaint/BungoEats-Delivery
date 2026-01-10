@@ -31,6 +31,7 @@ async function seed() {
     createdCategories.forEach((cat: any) => {
       categoryIdMap[cat.id] = cat._id.toString();
     });
+    console.log('Category map created:', Object.keys(categoryIdMap).length);
     
     console.log(`✅ Seeded ${seedData.categories.length} categories`);
     

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Order from '@/lib/models/Order';
 
@@ -7,7 +7,7 @@ import Order from '@/lib/models/Order';
  * Get order details and status
  */
 export async function GET(
-  request: NextRequest,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -19,39 +19,34 @@ export async function GET(
 
     if (!order) {
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Order not found',
-        },
+        { error: 'Order not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: {
-        orderId: order._id.toString(),
-        items: order.items,
-        customer: order.customer,
-        subtotal: order.subtotal,
-        deliveryFee: order.deliveryFee,
-        tax: order.tax,
-        total: order.total,
-        paymentMethod: order.paymentMethod,
-        status: order.status,
-        preferredTime: order.preferredTime,
-        createdAt: order.createdAt,
-        updatedAt: order.updatedAt,
-      },
-    });
+    const transformed = {
+      _id: order._id.toString(),
+      id: order.id,
+      orderNumber: order.orderNumber,
+      items: order.items,
+      customer: order.customer,
+      restaurantId: order.restaurantId,
+      subtotal: order.subtotal,
+      deliveryFee: order.deliveryFee,
+      tax: order.tax,
+      total: order.total,
+      paymentMethod: order.paymentMethod,
+      status: order.status,
+      estimatedTime: order.estimatedTime,
+      createdAt: order.createdAt,
+      updatedAt: order.updatedAt,
+    };
+
+    return NextResponse.json(transformed);
   } catch (error: any) {
     console.error('Error fetching order:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Failed to fetch order',
-        message: error.message,
-      },
+      { error: 'Failed to fetch order', message: error.message },
       { status: 500 }
     );
   }
@@ -62,7 +57,7 @@ export async function GET(
  * Update order status (for admin or status progression)
  */
 export async function PATCH(
-  request: NextRequest,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -72,14 +67,11 @@ export async function PATCH(
     const body = await request.json();
     const { status } = body;
 
-    const validStatuses = ['placed', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'];
+    const validStatuses = ['pending', 'placed', 'confirmed', 'preparing', 'ready', 'out_for_delivery', 'delivered', 'cancelled'];
 
     if (!status || !validStatuses.includes(status)) {
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Invalid status',
-        },
+        { error: 'Invalid status' },
         { status: 400 }
       );
     }
@@ -92,21 +84,15 @@ export async function PATCH(
 
     if (!order) {
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Order not found',
-        },
+        { error: 'Order not found' },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
-      success: true,
-      data: {
-        orderId: order._id.toString(),
-        status: order.status,
-        updatedAt: order.updatedAt,
-      },
+      _id: order._id.toString(),
+      status: order.status,
+      updatedAt: order.updatedAt,
     });
   } catch (error: any) {
     console.error('Error updating order:', error);

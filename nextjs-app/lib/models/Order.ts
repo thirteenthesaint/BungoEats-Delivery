@@ -3,6 +3,7 @@ import { Order } from '@/types';
 
 const OrderSchema = new Schema<Order>({
   id: { type: String, required: true, unique: true },
+  orderNumber: { type: String, required: true, unique: true },
   items: [{
     menuItemId: { type: String, required: true },
     name: { type: String, required: true },
@@ -24,8 +25,8 @@ const OrderSchema = new Schema<Order>({
   paymentMethod: { type: String, enum: ['cash', 'mpesa', 'card'], required: true },
   status: { 
     type: String, 
-    enum: ['placed', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'],
-    default: 'placed'
+    enum: ['pending', 'placed', 'confirmed', 'preparing', 'ready', 'out_for_delivery', 'delivered', 'cancelled'],
+    default: 'pending'
   },
   estimatedTime: { type: Number },
   createdAt: { type: Date, default: Date.now },

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Order from '@/lib/models/Order';
 import MenuItem from '@/lib/models/MenuItem';
@@ -16,98 +16,76 @@ import MenuItem from '@/lib/models/MenuItem';
  *   preferredTime?: string
  * }
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     await connectDB();
 
     const body = await request.json();
-    const { items, customer, deliveryType, paymentMethod, preferredTime } = body;
+    const { restaurant, items, customerName, phone, email, deliveryAddress, paymentMethod, notes, subtotal, deliveryFee, tax, total } = body;
 
     // Validation
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json(
-        { success: false, error: 'Invalid items' },
+        { error: 'Invalid items' },
         { status: 400 }
       );
     }
 
-    if (!customer || !customer.name || !customer.phone) {
+    if (!customerName || !phone) {
       return NextResponse.json(
-        { success: false, error: 'Customer name and phone are required' },
+        { error: 'Customer name and phone are required' },
         { status: 400 }
       );
     }
 
-    if (deliveryType === 'delivery' && !customer.address) {
-      return NextResponse.json(
-        { success: false, error: 'Address is required for delivery' },
-        { status: 400 }
-      );
-    }
-
-    // Fetch menu items to get prices
-    const menuItemIds = items.map((item) => item.menuItemId);
+    // Fetch menu items to populate data
+    const menuItemIds = items.map((item: any) => item.menuItem);
     const menuItems = await MenuItem.find({ _id: { $in: menuItemIds } }).lean();
 
-    if (menuItems.length !== items.length) {
-      return NextResponse.json(
-        { success: false, error: 'Some menu items not found' },
-        { status: 404 }
-      );
-    }
-
-    // Calculate totals
-    let subtotal = 0;
-    const orderItems = items.map((cartItem) => {
+    // Create order with populated items
+    const orderItemsWithDetails = items.map((item: any) => {
       const menuItem = menuItems.find(
-        (mi: any) => mi._id.toString() === cartItem.menuItemId
+        (mi: any) => mi._id.toString() === item.menuItem
       );
-      const itemTotal = (menuItem?.price || 0) * cartItem.quantity;
-      subtotal += itemTotal;
-
       return {
-        menuItemId: cartItem.menuItemId,
+        menuItemId: item.menuItem,
         name: menuItem?.name || '',
-        price: menuItem?.price || 0,
-        quantity: cartItem.quantity,
-        notes: cartItem.notes || '',
+        price: item.price,
+        quantity: item.quantity,
+        notes: item.notes || '',
       };
     });
 
-    const deliveryFee = deliveryType === 'delivery' ? 100 : 0;
-    const taxRate = 0.16;
-    const tax = Math.round((subtotal + deliveryFee) * taxRate);
-    const total = subtotal + deliveryFee + tax;
+    // Generate order number
+    const orderNumber = 'ORD' + Date.now().toString().slice(-8);
 
     // Create order
     const order = await Order.create({
-      items: orderItems,
+      id: orderNumber,
+      orderNumber,
+      restaurantId: restaurant,
+      items: orderItemsWithDetails,
       customer: {
-        name: customer.name,
-        phone: customer.phone,
-        address: customer.address || '',
-        deliveryType: deliveryType,
+        name: customerName,
+        phone,
+        address: deliveryAddress,
+        deliveryType: deliveryAddress ? 'delivery' : 'pickup',
       },
+      paymentMethod,
       subtotal,
       deliveryFee,
       tax,
       total,
-      paymentMethod,
-      status: 'placed',
-      preferredTime: preferredTime || 'ASAP',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      status: 'pending',
+      estimatedTime: 30,
     });
 
     return NextResponse.json(
       {
-        success: true,
-        data: {
-          orderId: order._id.toString(),
-          status: order.status,
-          total: order.total,
-          estimatedTime: '30-45 minutes',
-        },
+        _id: order._id.toString(),
+        orderNumber: order.orderNumber,
+        status: order.status,
+        total: order.total,
       },
       { status: 201 }
     );
@@ -115,10 +93,49 @@ export async function POST(request: NextRequest) {
     console.error('Error creating order:', error);
     return NextResponse.json(
       {
-        success: false,
         error: 'Failed to create order',
         message: error.message,
       },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    await connectDB();
+
+    const { searchParams } = new URL(request.url);
+    const phone = searchParams.get('phone');
+
+    if (!phone) {
+      return NextResponse.json(
+        { error: 'Phone number is required' },
+        { status: 400 }
+      );
+    }
+
+    const orders = await Order.find({ phone })
+      .populate('restaurant', 'name')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const transformed = orders.map((order: any) => ({
+      _id: order._id.toString(),
+      orderNumber: order.orderNumber,
+      restaurant: {
+        name: order.restaurant?.name || 'Restaurant',
+      },
+      status: order.status,
+      total: order.total,
+      createdAt: order.createdAt,
+    }));
+
+    return NextResponse.json(transformed);
+  } catch (error: any) {
+    console.error('Error fetching orders:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch orders', message: error.message },
       { status: 500 }
     );
   }
