@@ -7,12 +7,15 @@ import {
   Container,
   Button,
   Box,
-  Menu,
-  MenuItem,
-  IconButton
+  TextField,
+  InputAdornment,
+  IconButton,
+  Badge,
+  Avatar
 } from '@mui/material';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import MenuIcon from '@mui/icons-material/Menu';
 import Home from './pages/Home';
 import MenuPage from './pages/Menu';
 import Cart from './pages/Cart';
@@ -25,85 +28,147 @@ import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const [searchQuery, setSearchQuery] = useState('');
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   return (
     <Router>
-      <div className="App">
-        <AppBar position="static" sx={{ background: '#DC2626' }}>
-          <Toolbar>
-            <Typography 
-              variant="h6" 
-              component={Link} 
-              to="/" 
-              sx={{ 
-                flexGrow: 1, 
-                textDecoration: 'none', 
-                color: 'inherit',
-                cursor: 'pointer'
-              }}
-            >
-              BungoEats
-            </Typography>
-            <IconButton color="inherit" component={Link} to="/cart" sx={{ mr: 1 }}>
-              <ShoppingCartIcon />
-            </IconButton>
-            <IconButton 
-              color="inherit" 
-              onClick={handleMenuClick}
-              edge="end"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleMenuClose}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <MenuItem component={Link} to="/" onClick={handleMenuClose}>
-                Home
-              </MenuItem>
-              <MenuItem component={Link} to="/restaurants" onClick={handleMenuClose}>
-                Restaurants
-              </MenuItem>
-              <MenuItem component={Link} to="/login" onClick={handleMenuClose}>
-                Login
-              </MenuItem>
-              <MenuItem component={Link} to="/register" onClick={handleMenuClose}>
-                Register
-              </MenuItem>
-            </Menu>
-            {user && (
-              <>
-                <Button color="inherit" component={Link} to="/orders">
-                  My Orders
-                </Button>
-                <Button color="inherit" onClick={() => setUser(null)}>
-                  Logout
-                </Button>
-              </>
-            )}
+      <div className="App" style={{ backgroundColor: '#FAFAFA', minHeight: '100vh' }}>
+        {/* Header with Search */}
+        <AppBar 
+          position="sticky" 
+          elevation={0}
+          sx={{ 
+            backgroundColor: '#FFFFFF',
+            borderBottom: '1px solid #E0E0E0'
+          }}
+        >
+          <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
+            {/* Logo */}
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <RestaurantIcon sx={{ mr: 1, color: '#FF6B35', fontSize: 32 }} />
+              <Typography 
+                variant="h5" 
+                component={Link}
+                to="/"
+                sx={{ 
+                  fontWeight: 700,
+                  color: '#2D3436',
+                  letterSpacing: '-0.5px',
+                  textDecoration: 'none'
+                }}
+              >
+                BungoEats
+              </Typography>
+            </Box>
+
+            {/* Search Bar */}
+            <Box sx={{ flexGrow: 1, mx: 4, maxWidth: 500 }}>
+              <TextField
+                fullWidth
+                size="small"
+                placeholder="Search for restaurants or food..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                sx={{
+                  backgroundColor: '#F5F5F5',
+                  borderRadius: 2,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    '& fieldset': {
+                      borderColor: 'transparent',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#FF6B35',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#FF6B35',
+                    },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: '#757575' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+
+            {/* Navigation Icons */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {user ? (
+                <>
+                  <IconButton 
+                    component={Link} 
+                    to="/cart"
+                    sx={{ color: '#2D3436' }}
+                  >
+                    <Badge badgeContent={cartItemsCount} color="error">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                  <Button
+                    component={Link}
+                    to="/orders"
+                    sx={{
+                      color: '#2D3436',
+                      textTransform: 'none',
+                      fontWeight: 500
+                    }}
+                  >
+                    My Orders
+                  </Button>
+                  <Avatar 
+                    sx={{ 
+                      bgcolor: '#FF6B35', 
+                      width: 36, 
+                      height: 36,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {user.name ? user.name[0] : 'U'}
+                  </Avatar>
+                </>
+              ) : (
+                <>
+                  <Button
+                    component={Link}
+                    to="/login"
+                    sx={{
+                      color: '#2D3436',
+                      textTransform: 'none',
+                      fontWeight: 500
+                    }}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    component={Link}
+                    to="/register"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: '#FF6B35',
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      borderRadius: 2,
+                      px: 3,
+                      '&:hover': {
+                        backgroundColor: '#E55A2B',
+                      },
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
+            </Box>
           </Toolbar>
         </AppBar>
 
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        {/* Main Content */}
+        <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/restaurants" element={<Restaurants />} />
@@ -116,19 +181,23 @@ function App() {
           </Routes>
         </Container>
 
+        {/* Footer */}
         <Box
           component="footer"
           sx={{
-            py: 3,
+            py: 4,
             px: 2,
             mt: 'auto',
-            backgroundColor: '#2c3e50',
+            backgroundColor: '#2D3436',
             color: 'white',
             textAlign: 'center'
           }}
         >
-          <Typography variant="body2">
-            © 2026 BungoEats
+          <Typography variant="body2" sx={{ mb: 1 }}>
+            © 2026 BungoEats - Food Delivery for Bungoma County
+          </Typography>
+          <Typography variant="caption" sx={{ color: '#B2BEC3' }}>
+            Fast, Fresh, and Delicious Food Delivered to Your Door
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, fontSize: '0.9rem' }}>
             Designed by{' '}
@@ -136,7 +205,7 @@ function App() {
               href="https://fab13n.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
-              style={{ color: '#9b59b6', textDecoration: 'none', fontWeight: 600 }}
+              style={{ color: '#FF6B35', textDecoration: 'none', fontWeight: 600 }}
             >
               FabcR8r
             </a>
