@@ -7,6 +7,7 @@ export interface Restaurant {
   phone: string;
   address: string;
   priceLevel: string;
+  price_level?: string;
   tags: string[];
   description?: string;
   imageUrl?: string;
