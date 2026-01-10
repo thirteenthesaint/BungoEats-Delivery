@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
         name: customer.name,
         phone: customer.phone,
         address: customer.address || '',
-        pickupOrDelivery: deliveryType,
+        deliveryType: deliveryType,
       },
       subtotal,
       deliveryFee,
