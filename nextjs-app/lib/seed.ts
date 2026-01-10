@@ -68,7 +68,7 @@ async function seed() {
     console.log(`   - ${seedData.categories.length} categories`);
     console.log(`   - ${seedData.restaurants.length} restaurants`);
     
-    const totalMenuItems = seedData.restaurants.reduce((sum, r) => sum + r.menu.length, 0);
+    const totalMenuItems = seedData.restaurants.reduce((sum: number, r: any) => sum + r.menu.length, 0);
     console.log(`   - ${totalMenuItems} menu items`);
     
     process.exit(0);
