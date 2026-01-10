@@ -13,7 +13,6 @@ import {
   Badge,
   Avatar
 } from '@mui/material';
-import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Home from './pages/Home';
@@ -46,19 +45,34 @@ function App() {
           <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
             {/* Logo */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <RestaurantIcon sx={{ mr: 1, color: '#FF6B35', fontSize: 32 }} />
               <Typography 
-                variant="h5" 
                 component={Link}
                 to="/"
                 sx={{ 
-                  fontWeight: 700,
-                  color: '#2D3436',
-                  letterSpacing: '-0.5px',
-                  textDecoration: 'none'
+                  textDecoration: 'none',
+                  display: 'flex'
                 }}
               >
-                BungoEats
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    fontWeight: 700,
+                    color: '#22C55E',
+                    letterSpacing: '-0.5px'
+                  }}
+                >
+                  Bungo
+                </Typography>
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    fontWeight: 700,
+                    color: '#D62300',
+                    letterSpacing: '-0.5px'
+                  }}
+                >
+                  Eats
+                </Typography>
               </Typography>
             </Box>
 
