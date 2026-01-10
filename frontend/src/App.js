@@ -149,13 +149,13 @@ function App() {
                     to="/register"
                     variant="contained"
                     sx={{
-                      backgroundColor: '#FF6B35',
+                      backgroundColor: '#22C55E',
                       textTransform: 'none',
                       fontWeight: 600,
                       borderRadius: 2,
                       px: 3,
                       '&:hover': {
-                        backgroundColor: '#E55A2B',
+                        backgroundColor: '#16A34A',
                       },
                     }}
                   >

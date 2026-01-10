@@ -50,7 +50,7 @@ function Home() {
             size="large"
             startIcon={<ShoppingCart />}
             sx={{ 
-              bgcolor: '#7C3AED',
+              bgcolor: '#D62300',
               color: 'white',
               px: 5,
               py: 1.5,
@@ -59,7 +59,7 @@ function Home() {
               fontSize: '1.1rem',
               fontWeight: 600,
               '&:hover': {
-                bgcolor: '#6D28D9'
+                bgcolor: '#B01E00'
               }
             }}
           >
@@ -137,7 +137,7 @@ function Home() {
                         ⭐ {restaurant.note}
                       </Typography>
                     )}
-                    <Button component={Link} to="/menu" fullWidth variant="contained" sx={{ bgcolor: '#7C3AED', color: 'white', borderRadius: 2, textTransform: 'none', fontWeight: 600, py: 1, '&:hover': { bgcolor: '#6D28D9' } }}>
+                    <Button component={Link} to="/menu" fullWidth variant="contained" sx={{ bgcolor: '#D62300', color: 'white', borderRadius: 2, textTransform: 'none', fontWeight: 600, py: 1, '&:hover': { bgcolor: '#B01E00' } }}>
                       View Menu
                     </Button>
                   </CardContent>
@@ -160,7 +160,7 @@ function Home() {
             to="/menu"
             variant="contained"
             size="large"
-            sx={{ bgcolor: '#7C3AED', color: 'white', px: 6, py: 1.5, borderRadius: 3, textTransform: 'none', fontSize: '1.1rem', fontWeight: 600, '&:hover': { bgcolor: '#6D28D9' } }}
+            sx={{ bgcolor: '#D62300', color: 'white', px: 6, py: 1.5, borderRadius: 3, textTransform: 'none', fontSize: '1.1rem', fontWeight: 600, '&:hover': { bgcolor: '#B01E00' } }}
           >
             View Full Menu
           </Button>
