@@ -87,6 +87,7 @@ export interface Order {
   total: number;
   paymentMethod: 'cash' | 'mpesa' | 'card';
   status: OrderStatus;
+  preferredTime?: string;
   createdAt: Date;
   updatedAt: Date;
   estimatedTime?: number;
