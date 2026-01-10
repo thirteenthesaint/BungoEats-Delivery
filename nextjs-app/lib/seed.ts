@@ -46,7 +46,7 @@ async function seed() {
       const createdRestaurant = await RestaurantModel.create(restaurantData);
       
       // Create menu items for this restaurant using the actual MongoDB _id
-      const menuItemsWithIds = menuItems.map(item => ({
+      const menuItemsWithIds = menuItems.map((item: any) => ({
         ...item,
         restaurantId: createdRestaurant._id.toString(),
         categoryId: categoryIdMap[item.categoryId] || item.categoryId, // Map to MongoDB _id
