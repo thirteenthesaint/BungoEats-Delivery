@@ -22,7 +22,7 @@ export default function MenuItemCard({ item, restaurantId, restaurantName }: Men
       id: item.id,
       name: item.name,
       price: item.price,
-      image: item.image || '',
+      image: item.imageUrl || '',
       restaurantId,
       restaurantName
     });
@@ -35,10 +35,10 @@ export default function MenuItemCard({ item, restaurantId, restaurantName }: Men
   return (
     <Card className="flex flex-col h-full">
       {/* Menu Item Image */}
-      {item.image && (
+      {item.imageUrl && (
         <div className="mb-4 -mx-5 -mt-5 md:-mx-7 md:-mt-7">
           <img
-            src={item.image}
+            src={item.imageUrl}
             alt={item.name}
             className="w-full h-48 object-cover rounded-t-2xl md:rounded-t-3xl"
           />
