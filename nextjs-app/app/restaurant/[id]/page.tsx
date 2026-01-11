@@ -126,13 +126,13 @@ function addToCart(itemId: string) {
   const setCart = () => {};
   const saveCart = () => {};
   const addToCart = (itemId: string) => {
-    const newCart = { ...cart, [itemId]: (cart[itemId] || 0) + 1 };
+    const newCart = { ...cart, [itemId]: ((cart as Record<string, number>)[itemId] || 0) + 1 };
     setCart(newCart);
     saveCart(newCart);
   };
 
   const removeFromCart = (itemId: string) => {
-    const newCart = { ...cart };
+    const newCart = { ...cart } as Record<string, number>;
     if (newCart[itemId] > 1) {
       newCart[itemId]--;
     } else {
