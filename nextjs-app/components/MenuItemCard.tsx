@@ -22,7 +22,7 @@ export default function MenuItemCard({ item, restaurantId, restaurantName }: Men
       id: item.id,
       name: item.name,
       price: item.price,
-      image: item.imageUrl || '',
+      image: item.image || '',
       restaurantId,
       restaurantName
     });
