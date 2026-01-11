@@ -136,7 +136,7 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredRestaurants.map((restaurant) => (
-              <Link key={restaurant.id} href={`/restaurant/${restaurant.slug}`}>
+              <Link key={restaurant.id} href={`/restaurant/${restaurant.id}`}>
                 <Card hover padding="none" className="overflow-hidden h-full group">
                   {/* Restaurant Emoji Header */}
                   <div className="relative bg-gradient-to-br from-orange-50 to-red-50 p-10 flex items-center justify-center">

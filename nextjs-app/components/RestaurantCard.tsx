@@ -31,7 +31,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
   };
 
   return (
-    <Link href={`/restaurant/${restaurant.slug}`}>
+    <Link href={`/restaurant/${restaurant.id}`}>
       <Card hover className="relative">
         {/* Favorite Button */}
         {user && (
