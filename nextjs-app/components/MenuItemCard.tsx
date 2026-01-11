@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem } from '@/types';
 import Card from './ui/Card';
 import PrimaryButton from './ui/PrimaryButton';
-import { useCartStore } from '@/store/cartStore';
+import { useCart } from '@/store/cartStore';
 import { Plus, Minus } from 'lucide-react';
 
 interface MenuItemCardProps {
@@ -12,7 +12,7 @@ interface MenuItemCardProps {
 }
 
 export default function MenuItemCard({ item, restaurantId, restaurantName }: MenuItemCardProps) {
-  const { items, addItem, removeItem } = useCartStore();
+  const { items, addItem, removeItem } = useCart();
   
   const cartItem = items.find(i => i.id === item.id);
   const quantity = cartItem?.quantity || 0;
