@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useCartStore } from '@/lib/store/cartStore';
+import { useCart } from '@/store/cartStore';
 import { ShoppingCartIcon, UserCircleIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/contexts/AuthContext';
 import Button from './ui/Button';
@@ -11,7 +11,8 @@ import Input from './ui/Input';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const totalItems = useCartStore((state) => state.getTotalItems());
+  const { items } = useCart();
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
