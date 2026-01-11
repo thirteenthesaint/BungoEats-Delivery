@@ -105,7 +105,77 @@ export default function RestaurantPage() {
 
       {/* Menu Items */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Menu content will go here */}
+        {/* Category Filter */}
+        <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
+          <button
+            onClick={() => setSelectedCategory('all')}
+            className={`px-5 py-2 rounded-full whitespace-nowrap transition-colors ${
+              selectedCategory === 'all'
+                ? 'bg-green-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            All Items
+          </button>
+          {restaurant.categories.map((cat) => (
+            <button
+              key={cat.name}
+              onClick={() => setSelectedCategory(cat.name)}
+              className={`px-5 py-2 rounded-full whitespace-nowrap transition-colors ${
+                selectedCategory === cat.name
+                  ? 'bg-green-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Menu Items Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  {item.name}
+                </h3>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                  {item.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xl font-bold text-green-600">
+                    KSh {item.price}
+                  </span>
+                  <Button
+                    onClick={() => handleAddToCart(item)}
+                    size="sm"
+                    className={addedItems.has(item.id) ? 'bg-green-700' : ''}
+                  >
+                    {addedItems.has(item.id) ? '✓ Added' : 'Add to Cart'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredItems.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No items found in this category.</p>
+          </div>
+        )}
       </div>
     </div>
   );
