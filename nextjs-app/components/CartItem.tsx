@@ -1,6 +1,6 @@
 import React from 'react';
 import { CartItem as CartItemType } from '@/types';
-import { useCartStore } from '@/store/cartStore';
+import { useCart } from '@/store/cartStore';
 import { Plus, Minus, Trash2 } from 'lucide-react';
 
 interface CartItemProps {
@@ -8,18 +8,18 @@ interface CartItemProps {
 }
 
 export default function CartItem({ item }: CartItemProps) {
-  const { addItem, removeItem, clearItem } = useCartStore();
+  const { updateQuantity, removeItem } = useCart();
 
   const handleIncrease = () => {
-    addItem(item);
+    updateQuantity(item.id, item.quantity + 1);
   };
 
   const handleDecrease = () => {
-    removeItem(item.id);
+    updateQuantity(item.id, item.quantity - 1);
   };
 
   const handleRemove = () => {
-    clearItem(item.id);
+    removeItem(item.id);
   };
 
   return (
