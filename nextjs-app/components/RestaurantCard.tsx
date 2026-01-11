@@ -58,12 +58,12 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
           <h3 className="text-xl font-bold text-gray-900">{restaurant.name}</h3>
           
           <div className="flex flex-wrap gap-2">
-            {restaurant.categories.map((category, index) => (
+            {restaurant.tags.map((tag, index) => (
               <span
                 key={index}
                 className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
               >
-                {category}
+                {tag}
               </span>
             ))}
           </div>
