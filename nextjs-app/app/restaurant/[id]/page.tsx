@@ -120,55 +120,6 @@ export default function RestaurantPage() {
     </div>
   );
 }
-
-function addToCart(itemId: string) {
-  const cart = {};
-  const setCart = () => {};
-  const saveCart = () => {};
-  const addToCart = (itemId: string) => {
-    const newCart = { ...cart, [itemId]: ((cart as Record<string, number>)[itemId] || 0) + 1 };
-    setCart(newCart);
-    saveCart(newCart);
-  };
-
-  const removeFromCart = (itemId: string) => {
-    const newCart = { ...cart } as Record<string, number>;
-    if (newCart[itemId] > 1) {
-      newCart[itemId]--;
-    } else {
-      delete newCart[itemId];
-    }
-    setCart(newCart);
-    saveCart(newCart);
-  };
-
-  const categories = ['All', ...new Set(menuItems.map(item => item.category))];
-  const filteredItems = selectedCategory === 'All' 
-    ? menuItems 
-    : menuItems.filter(item => item.category === selectedCategory);
-
-  const cartItemCount = Object.values(cart).reduce((sum, count) => sum + count, 0);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
-      </div>
-    );
-  }
-
-  if (!restaurant) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Restaurant not found</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
