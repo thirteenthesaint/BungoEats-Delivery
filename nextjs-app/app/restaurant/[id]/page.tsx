@@ -1,52 +1,61 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { restaurants } from '@/data/restaurants';
+import { useCart } from '@/store/cartStore';
+import Button from '@/components/ui/Button';
+import Badge from '@/components/ui/Badge';
+import { StarIcon, ClockIcon, MapPinIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-import Link from 'next/link';
-
-interface MenuItem {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  image: string;
-  available: boolean;
-}
-
-interface Restaurant {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  rating: number;
-  deliveryTime: string;
-  categories: string[];
-}
 
 export default function RestaurantPage() {
   const params = useParams();
   const router = useRouter();
-  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [cart, setCart] = useState<{[key: string]: number}>({});
+  const { addItem } = useCart();
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    if (params.id) {
-      fetchRestaurantData();
-      loadCart();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.id]);
+  const restaurant = restaurants.find((r) => r.id === params.id);
 
-  const loadCart = () => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
+  if (!restaurant) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Restaurant not found</h1>
+          <Button onClick={() => router.push('/')}>Go back home</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const allMenuItems = restaurant.categories.flatMap((cat) =>
+    cat.items.map((item) => ({ ...item, category: cat.name }))
+  );
+
+  const filteredItems =
+    selectedCategory === 'all'
+      ? allMenuItems
+      : allMenuItems.filter((item) => item.category === selectedCategory);
+
+  const handleAddToCart = (item: any) => {
+    addItem({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+    });
+    
+    setAddedItems(prev => new Set(prev).add(item.id));
+    setTimeout(() => {
+      setAddedItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(item.id);
+        return newSet;
+      });
+    }, 2000);
   };
 
   const saveCart = (newCart: {[key: string]: number}) => {
@@ -54,25 +63,68 @@ export default function RestaurantPage() {
     localStorage.setItem('restaurantId', params.id as string);
   };
 
-  const fetchRestaurantData = async () => {
-    try {
-      const [restaurantRes, menuRes] = await Promise.all([
-        fetch(`/api/restaurants/${params.id}`),
-        fetch(`/api/restaurants/${params.id}/menu`)
-      ]);
-      
-      const restaurantData = await restaurantRes.json();
-      const menuData = await menuRes.json();
-      
-      setRestaurant(restaurantData);
-      setMenuItems(menuData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Restaurant Hero Banner */}
+      <div className="relative h-64 md:h-80 bg-gradient-to-br from-orange-400 to-red-500">
+        <div className="absolute inset-0">
+          <Image
+            src={restaurant.image}
+            alt={restaurant.name}
+            fill
+            className="object-cover opacity-30"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        
+        {/* Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition-colors"
+        >
+          <ArrowLeftIcon className="w-6 h-6 text-gray-900" />
+        </button>
 
+        {/* Restaurant Info */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">{restaurant.name}</h1>
+          <div className="flex flex-wrap items-center gap-4 text-sm">
+            <div className="flex items-center gap-1">
+              <StarIcon className="w-5 h-5 text-yellow-400" />
+              <span className="font-semibold">{restaurant.rating}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <ClockIcon className="w-5 h-5" />
+              <span>{restaurant.deliveryTime}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MapPinIcon className="w-5 h-5" />
+              <span>Bungoma</span>
+            </div>
+            <span className="font-semibold">{restaurant.priceRange}</span>
+          </div>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {restaurant.tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="bg-white/20 backdrop-blur-sm text-white border-white/30">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Menu Items */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Menu content will go here */}
+      </div>
+    </div>
+  );
+}
+
+function addToCart(itemId: string) {
+  const cart = {};
+  const setCart = () => {};
+  const saveCart = () => {};
   const addToCart = (itemId: string) => {
     const newCart = { ...cart, [itemId]: (cart[itemId] || 0) + 1 };
     setCart(newCart);

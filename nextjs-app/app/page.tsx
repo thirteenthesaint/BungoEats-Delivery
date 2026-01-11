@@ -1,173 +1,222 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-interface Restaurant {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  rating: number;
-  deliveryTime: string;
-  categories: string[];
-}
+import { restaurants, getAllCategories } from '@/data/restaurants';
+import { useAuth } from '@/contexts/AuthContext';
+import Card from '@/components/ui/Card';
+import Badge from '@/components/ui/Badge';
+import Button from '@/components/ui/Button';
+import { MagnifyingGlassIcon, StarIcon, ClockIcon, MapPinIcon, HeartIcon } from '@heroicons/react/24/solid';
+import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
 
 export default function Home() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { user, addFavourite, removeFavourite } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const categories = getAllCategories();
 
-  useEffect(() => {
-    fetchRestaurants();
-  }, []);
-
-  const fetchRestaurants = async () => {
+  const handleFavoriteToggle = async (e: React.MouseEvent, restaurantId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!user) {
+      alert('Please login to add favorites');
+      return;
+    }
+    
     try {
-      const response = await fetch('/api/restaurants');
-      const data = await response.json();
-      setRestaurants(data);
-    } catch (error) {
-      console.error('Error fetching restaurants:', error);
-    } finally {
-      setLoading(false);
+      if (user.favourites.includes(restaurantId)) {
+        await removeFavourite(restaurantId);
+      } else {
+        await addFavourite(restaurantId);
+      }
+    } catch (error: any) {
+      alert(error.message);
     }
   };
 
-  const categories = ['All', 'Pizza', 'Burgers', 'Asian', 'Desserts', 'Drinks'];
-
-  const filteredRestaurants = restaurants.filter(restaurant => {
-    const matchesSearch = restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         restaurant.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || 
-                           restaurant.categories.includes(selectedCategory);
-    return matchesSearch && matchesCategory;
-  });
+  const filteredRestaurants = restaurants
+    .filter(restaurant => {
+      const matchesSearch = restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           restaurant.description?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || 
+                             restaurant.tags.includes(selectedCategory);
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => {
+      // Sort favorites first if user is logged in
+      if (user) {
+        const aIsFav = user.favourites.includes(a.id);
+        const bIsFav = user.favourites.includes(b.id);
+        if (aIsFav && !bIsFav) return -1;
+        if (!aIsFav && bIsFav) return 1;
+      }
+      
+      // Then sort by priority (lower number = higher priority)
+      if (a.priority && !b.priority) return -1;
+      if (!a.priority && b.priority) return 1;
+      if (a.priority && b.priority) return a.priority - b.priority;
+      return 0;
+    });
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">B</span>
+      {/* Hero Section - Premium Spacing */}
+      <section className="relative bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-36">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+              Delicious Food,
+              <br />
+              Delivered to Your Door
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
+              Order from the best restaurants in Bungoma. Fast delivery, great prices.
+            </p>
+            
+            {/* Search Bar - Premium Spacing */}
+            <div className="bg-white rounded-2xl shadow-2xl p-3 flex items-center gap-3">
+              <div className="flex-1 flex items-center gap-4 px-5">
+                <MagnifyingGlassIcon className="w-6 h-6 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search restaurants or dishes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 py-4 outline-none text-gray-900 placeholder-gray-400 text-lg"
+                />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">BungoEats</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/cart" className="relative">
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </Link>
-              <Link href="/orders" className="text-gray-700 hover:text-red-600 font-medium">
-                Orders
-              </Link>
-              <Link href="/admin" className="text-gray-700 hover:text-red-600 font-medium">
-                Admin
-              </Link>
+              <Button variant="primary" size="lg" className="hidden md:block">
+                Search
+              </Button>
             </div>
           </div>
         </div>
-      </header>
+        
+        {/* Decorative Elements */}
+        <div className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+      </section>
 
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-2">Delicious Food Delivered</h2>
-          <p className="text-xl text-red-100">Order from the best restaurants in town</p>
-        </div>
-      </div>
-
-      {/* Search and Filter */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <input
-            type="text"
-            placeholder="Search restaurants..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex space-x-2 overflow-x-auto pb-4 mb-6">
-          {categories.map(category => (
+      {/* Categories - Premium Spacing */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+        <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium whitespace-nowrap transition-colors ${
+              className={`px-8 py-4 rounded-2xl font-semibold whitespace-nowrap transition-all text-base ${
                 selectedCategory === category
-                  ? 'bg-red-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:shadow-md'
               }`}
             >
               {category}
             </button>
           ))}
         </div>
+      </section>
 
-        {/* Restaurants Grid */}
-        {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      {/* Featured Restaurants - Premium Spacing */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-24">
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-3">Featured Restaurants</h2>
+            <p className="text-lg text-gray-600">Discover the best food in Bungoma</p>
+          </div>
+        </div>
+
+        {filteredRestaurants.length === 0 ? (
+          <div className="text-center py-24">
+            <p className="text-xl text-gray-500">No restaurants found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRestaurants.map(restaurant => (
-              <Link
-                key={restaurant._id}
-                href={`/restaurant/${restaurant._id}`}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
-              >
-                <div className="relative h-48 bg-gray-200">
-                  <Image
-                    src={restaurant.image || '/placeholder-restaurant.jpg'}
-                    alt={restaurant.name}
-                    fill
-                    className="object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/placeholder-restaurant.jpg';
-                    }}
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{restaurant.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{restaurant.description}</p>
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <span className="font-medium text-gray-900">{restaurant.rating}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredRestaurants.map((restaurant) => (
+              <Link key={restaurant.id} href={`/restaurant/${restaurant.slug}`}>
+                <Card hover padding="none" className="overflow-hidden h-full group">
+                  {/* Restaurant Emoji Header */}
+                  <div className="relative bg-gradient-to-br from-orange-50 to-red-50 p-10 flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-5xl shadow-lg">
+                      {restaurant.emoji}
                     </div>
-                    <span className="text-gray-600">{restaurant.deliveryTime}</span>
+                    
+                    {/* Favorite Button */}
+                    <button
+                      onClick={(e) => handleFavoriteToggle(e, restaurant.id)}
+                      className="absolute top-4 left-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:scale-110 transition-transform"
+                      aria-label={user?.favourites.includes(restaurant.id) ? 'Remove from favorites' : 'Add to favorites'}
+                    >
+                      {user?.favourites.includes(restaurant.id) ? (
+                        <HeartIcon className="w-6 h-6 text-red-500" />
+                      ) : (
+                        <HeartOutlineIcon className="w-6 h-6 text-gray-400 hover:text-red-500" />
+                      )}
+                    </button>
+                    
+                    {restaurant.rating >= 4.5 && (
+                      <div className="absolute top-4 right-4">
+                        <Badge variant="success" size="sm" className="shadow-lg">
+                          <StarIcon className="w-4 h-4 inline mr-1" />
+                          {restaurant.rating}
+                        </Badge>
+                      </div>
+                    )}
                   </div>
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {restaurant.categories.slice(0, 3).map(cat => (
-                      <span key={cat} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                        {cat}
-                      </span>
-                    ))}
+                  
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-500 transition-colors">
+                      {restaurant.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-5 line-clamp-2 leading-relaxed">
+                      {restaurant.description}
+                    </p>
+                    
+                    <div className="flex items-center gap-6 text-sm text-gray-500 mb-5">
+                      <div className="flex items-center gap-2">
+                        <StarIcon className="w-5 h-5 text-yellow-400" />
+                        <span className="font-semibold text-base">{restaurant.rating}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ClockIcon className="w-5 h-5 text-gray-400" />
+                        <span className="text-base">{restaurant.deliveryTime}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {restaurant.tags.slice(0, 3).map((tag) => (
+                        <Badge key={tag} variant="default" size="sm" className="px-3 py-1">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </Card>
               </Link>
             ))}
           </div>
         )}
+      </section>
 
-        {!loading && filteredRestaurants.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No restaurants found</p>
-          </div>
-        )}
-      </div>
+      {/* CTA Section - Premium Spacing */}
+      <section className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to order?
+          </h2>
+          <p className="text-xl md:text-2xl mb-10 text-white/90">
+            Join thousands of happy customers in Bungoma
+          </p>
+          <Link href="#restaurants">
+            <Button variant="secondary" size="lg">
+              Browse Restaurants
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

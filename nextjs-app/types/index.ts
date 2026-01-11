@@ -2,6 +2,8 @@
 export interface Restaurant {
   id: string;
   name: string;
+  slug: string;
+  emoji: string;
   rating: number;
   status: 'open' | 'closed';
   phone: string;
@@ -11,6 +13,8 @@ export interface Restaurant {
   tags: string[];
   description?: string;
   imageUrl?: string;
+  deliveryTime?: string;
+  priority?: number;
 }
 
 // Category Types
