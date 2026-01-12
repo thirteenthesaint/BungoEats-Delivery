@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Foodko Color Palette */
-  --color-primary: #ff6b35;
-  --color-primary-dark: #e85a2a;
-  --color-secondary: #ffa500;
+  /* BungoEats Color Palette - Burger King Red Theme */
+  --color-primary: #D62300;
+  --color-primary-dark: #B01E00;
+  --color-secondary: #2E7D32;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
@@ -18,23 +18,23 @@
   --color-gray-700: #374151;
   --color-gray-900: #111827;
   
-  /* Background */
-  --color-background: #ffffff;
-  --color-background-alt: #fafafa;
+  /* Background - Premium Cream Theme */
+  --color-background: #FFF8F0;
+  --color-background-alt: #FFF5F0;
   
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  /* Shadows - Premium Styling */
+  --shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 0.06);
+  --shadow-md: 0 2px 12px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 4px 20px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 8px 30px rgb(0 0 0 / 0.15);
   
-  /* Border Radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  /* Border Radius - Premium Styling */
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
   --radius-xl: 1.5rem;
 }
 
