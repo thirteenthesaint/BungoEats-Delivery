@@ -82,14 +82,14 @@ function Menu() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', mb: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 6 }}>
+      <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 5, color: '#1A1A1A' }}>
         Our Menu
       </Typography>
 
       {/* Filters */}
-      <Box sx={{ mb: 4 }}>
-        <Grid container spacing={2}>
+      <Box sx={{ mb: 5 }}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
@@ -97,6 +97,12 @@ function Menu() {
               variant="outlined"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  bgcolor: 'white'
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -106,6 +112,12 @@ function Menu() {
               label="Category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  bgcolor: 'white'
+                }
+              }}
             >
               {categories.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -119,11 +131,24 @@ function Menu() {
 
       {/* Cart Summary */}
       {getTotalItems() > 0 && (
-        <Box sx={{ mb: 3, p: 2, bgcolor: '#FFF5F0', borderRadius: 2 }}>
-          <Typography variant="h6">
+        <Box sx={{ mb: 4, p: 3, bgcolor: '#FFF5F0', borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
             Cart: {getTotalItems()} item(s) | Total: KES {Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
           </Typography>
-          <Button variant="contained" href="/cart" sx={{ mt: 1 }, bgcolor: '#FF6B35', '&:hover': { bgcolor: '#E55A2B' }}>
+          <Button 
+            variant="contained" 
+            href="/cart" 
+            sx={{ 
+              bgcolor: '#D62300', 
+              '&:hover': { bgcolor: '#B01E00' },
+              borderRadius: '12px',
+              py: 1.5,
+              px: 4,
+              fontWeight: 600,
+              textTransform: 'none',
+              fontSize: '1rem'
+            }}
+          >
             View Cart & Checkout
           </Button>
         </Box>
@@ -133,63 +158,110 @@ function Menu() {
       <Grid container spacing={3}>
         {filteredItems.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item._id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , borderRadius: '12px'}}>
+            <Card 
+              sx={{ 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column',
+                borderRadius: '16px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.12)'
+                }
+              }}
+            >
               <CardMedia
                 component="div"
                 sx={{
                   height: 200,
-                  bgcolor: '#f5f5f5',
+                  bgcolor: '#FFF8F0',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '5rem'
+                  fontSize: '5rem',
+                  borderRadius: '16px 16px 0 0'
                 }}
               >
                 {item.image || '🍽️'}
               </CardMedia>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" gutterBottom>
+              <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 1.5 }}>
                   {item.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
+                <Typography variant="body2" color="text.secondary" paragraph sx={{ mb: 2, lineHeight: 1.6 }}>
                   {item.description}
                 </Typography>
                 <Chip
                   label={item.category.replace('-', ' ').toUpperCase()}
                   size="small"
-                  sx={{ mb: 1 }}
+                  sx={{ 
+                    mb: 2,
+                    bgcolor: '#FFF5F0',
+                    color: '#D62300',
+                    fontWeight: 600,
+                    fontSize: '0.75rem'
+                  }}
                 />
-                <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, color: '#D62300', fontSize: '1.25rem' }}>
                   KES {item.price.toFixed(2)}
                 </Typography>
               </CardContent>
-              <Box sx={{ p: 2, pt: 0 }}>
+              <Box sx={{ p: 3, pt: 0 }}>
                 {getCartQuantity(item._id) === 0 ? (
                   <Button
                     fullWidth
                     variant="contained"
-                sx={{ bgcolor: '#FF6B35', '&:hover': { bgcolor: '#E55A2B' } }}
                     onClick={() => addToCart(item)}
+                    sx={{ 
+                      bgcolor: '#D62300', 
+                      '&:hover': { bgcolor: '#B01E00' },
+                      borderRadius: '12px',
+                      py: 1.5,
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      fontSize: '1rem'
+                    }}
                   >
                     Add to Cart
                   </Button>
                 ) : (
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
                     <Button
                       variant="outlined"
                       onClick={() => removeFromCart(item._id)}
-                      sx={{ minWidth: 40 }}
+                      sx={{ 
+                        minWidth: 48,
+                        height: 48,
+                        borderRadius: '12px',
+                        borderColor: '#D62300',
+                        color: '#D62300',
+                        '&:hover': { 
+                          borderColor: '#B01E00',
+                          bgcolor: 'rgba(255, 107, 53, 0.04)'
+                        }
+                      }}
                     >
                       <Remove />
                     </Button>
-                    <Typography variant="h6">
+                    <Typography variant="h6" sx={{ fontWeight: 600, minWidth: 40, textAlign: 'center' }}>
                       {getCartQuantity(item._id)}
                     </Typography>
                     <Button
                       variant="outlined"
-                sx={{ color: '#FF6B35', borderColor: '#FF6B35', '&:hover': { borderColor: '#E55A2B', bgcolor: 'rgba(255, 107, 53, 0.04)' } }}
                       onClick={() => addToCart(item)}
-                      sx={{ minWidth: 40 }}
+                      sx={{ 
+                        minWidth: 48,
+                        height: 48,
+                        borderRadius: '12px',
+                        borderColor: '#D62300',
+                        color: '#D62300',
+                        '&:hover': { 
+                          borderColor: '#B01E00',
+                          bgcolor: 'rgba(255, 107, 53, 0.04)'
+                        }
+                      }}
                     >
                       <Add />
                     </Button>

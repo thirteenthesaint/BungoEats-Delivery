@@ -120,14 +120,28 @@ function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <Container maxWidth="md" sx={{ py: 8, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>
+      <Container maxWidth="md" sx={{ py: 10, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
           Your Cart is Empty
         </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
+        <Typography variant="body1" color="text.secondary" paragraph sx={{ fontSize: '1.1rem', mb: 4 }}>
           Add some delicious items from our menu!
         </Typography>
-        <Button variant="contained" href="/menu" size="large"> sx={{ backgroundColor: '#FF6B35', '&:hover': { backgroundColor: '#E55A2B' } }}
+        <Button 
+          variant="contained" 
+          href="/menu" 
+          size="large"
+          sx={{ 
+            backgroundColor: '#D62300', 
+            '&:hover': { backgroundColor: '#B01E00' },
+            borderRadius: '12px',
+            py: 1.5,
+            px: 4,
+            fontWeight: 600,
+            textTransform: 'none',
+            fontSize: '1rem'
+          }}
+        >
           Browse Menu
         </Button>
       </Container>
@@ -135,8 +149,8 @@ function Cart() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', mb: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 6 }}>
+      <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 5, color: '#1A1A1A' }}>
         Your Cart
       </Typography>
 
@@ -149,58 +163,77 @@ function Cart() {
       <Grid container spacing={4}>
         {/* Cart Items */}
         <Grid item xs={12} md={7}>
-          <Card> sx={{ borderRadius: '12px' }}
-            <CardContent>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+            <CardContent sx={{ p: 3 }}>
               {cartItems.map((item) => (
-                <Box key={item._id} sx={{ mb: 3 }}>
+                <Box key={item._id} sx={{ mb: 3, pb: 3, borderBottom: '1px solid #f0f0f0', '&:last-child': { borderBottom: 'none', mb: 0, pb: 0 } }}>
                   <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} sm={6}>
-                      <Typography variant="h6">{item.name}</Typography>
+                      <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>{item.name}</Typography>
                       <Typography variant="body2" color="text.secondary">
                         KES {item.price.toFixed(2)} each
                       </Typography>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                         <IconButton
                           size="small"
                           onClick={() => updateQuantity(item._id, -1)}
+                          sx={{ 
+                            border: '1px solid #D62300',
+                            color: '#D62300',
+                            '&:hover': { bgcolor: 'rgba(255, 107, 53, 0.04)' }
+                          }}
                         >
-                          <Remove />
+                          <Remove fontSize="small" />
                         </IconButton>
-                        <Typography>{item.quantity}</Typography>
+                        <Typography sx={{ fontWeight: 600, minWidth: 30, textAlign: 'center' }}>{item.quantity}</Typography>
                         <IconButton
                           size="small"
                           onClick={() => updateQuantity(item._id, 1)}
+                          sx={{ 
+                            border: '1px solid #D62300',
+                            color: '#D62300',
+                            '&:hover': { bgcolor: 'rgba(255, 107, 53, 0.04)' }
+                          }}
                         >
-                          <Add />
+                          <Add fontSize="small" />
                         </IconButton>
                       </Box>
                     </Grid>
                     <Grid item xs={6} sm={3}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="h6">
+                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#D62300' }}>
                           KES {(item.price * item.quantity).toFixed(2)}
                         </Typography>
                         <IconButton
-                          color="primary"
-                  sx={{ color: '#FF6B35' }}
                           onClick={() => removeItem(item._id)}
+                          sx={{ color: '#D62300' }}
                         >
                           <Delete />
                         </IconButton>
                       </Box>
                     </Grid>
                   </Grid>
-                  <Divider sx={{ mt: 2 }} />
                 </Box>
               ))}
               <Button
                 variant="outlined"
-                color="error"
-                sx={{ color: '#FF6B35', borderColor: '#FF6B35', '&:hover': { borderColor: '#E55A2B', backgroundColor: 'rgba(255, 107, 53, 0.04)' } }}
                 onClick={clearCart}
-                sx={{ mt: 2 }}
+                sx={{ 
+                  mt: 3,
+                  color: '#D62300', 
+                  borderColor: '#D62300', 
+                  borderRadius: '12px',
+                  py: 1,
+                  px: 3,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  '&:hover': { 
+                    borderColor: '#B01E00', 
+                    backgroundColor: 'rgba(255, 107, 53, 0.04)' 
+                  } 
+                }}
               >
                 Clear Cart
               </Button>
@@ -210,9 +243,9 @@ function Cart() {
 
         {/* Checkout Form */}
         <Grid item xs={12} md={5}>
-          <Card> sx={{ borderRadius: '12px' }}
-            <CardContent>
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+            <CardContent sx={{ p: 3 }}>
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
                 Delivery Details
               </Typography>
               <TextField
@@ -222,7 +255,13 @@ function Cart() {
                 rows={3}
                 value={deliveryAddress}
                 onChange={(e) => setDeliveryAddress(e.target.value)}
-                sx={{ mb: 2 }}
+                sx={{ 
+                  mb: 2.5,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    bgcolor: 'white'
+                  }
+                }}
                 required
               />
               <TextField
@@ -231,7 +270,13 @@ function Cart() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="0712345678"
-                sx={{ mb: 2 }}
+                sx={{ 
+                  mb: 2.5,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    bgcolor: 'white'
+                  }
+                }}
                 required
               />
               <TextField
@@ -241,24 +286,30 @@ function Cart() {
                 rows={2}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                sx={{ mb: 3 }}
+                sx={{ 
+                  mb: 3,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    bgcolor: 'white'
+                  }
+                }}
               />
 
               <Divider sx={{ my: 2 }} />
 
-              <Box sx={{ mb: 2 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography>Subtotal:</Typography>
-                  <Typography>KES {calculateSubtotal().toFixed(2)}</Typography>
+              <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5 }}>
+                  <Typography sx={{ fontSize: '1rem' }}>Subtotal:</Typography>
+                  <Typography sx={{ fontSize: '1rem', fontWeight: 600 }}>KES {calculateSubtotal().toFixed(2)}</Typography>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography>Delivery Fee:</Typography>
-                  <Typography>KES {calculateDeliveryFee().toFixed(2)}</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5 }}>
+                  <Typography sx={{ fontSize: '1rem' }}>Delivery Fee:</Typography>
+                  <Typography sx={{ fontSize: '1rem', fontWeight: 600 }}>KES {calculateDeliveryFee().toFixed(2)}</Typography>
                 </Box>
-                <Divider sx={{ my: 1 }} />
+                <Divider sx={{ my: 2 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total:</Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 700 }}>Total:</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 700, color: '#D62300' }}>
                     KES {calculateTotal().toFixed(2)}
                   </Typography>
                 </Box>
@@ -267,15 +318,23 @@ function Cart() {
               <Button
                 fullWidth
                 variant="contained"
-                sx={{ backgroundColor: '#FF6B35', '&:hover': { backgroundColor: '#E55A2B' } }}
                 size="large"
                 onClick={handleCheckout}
                 disabled={loading}
+                sx={{ 
+                  backgroundColor: '#D62300', 
+                  '&:hover': { backgroundColor: '#B01E00' },
+                  borderRadius: '12px',
+                  py: 1.5,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  fontSize: '1rem'
+                }}
               >
                 {loading ? 'Processing...' : 'Place Order'}
               </Button>
 
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2, textAlign: 'center' }}>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2.5, textAlign: 'center', lineHeight: 1.5 }}>
                 Payment via M-Pesa. You will receive a prompt on your phone.
               </Typography>
             </CardContent>

@@ -23,37 +23,51 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <AppBar position="static" sx={{ backgroundColor: '#2c3e50' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#D62300', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
           <Toolbar>
             <RestaurantIcon sx={{ mr: 2 }} />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontWeight: 600, letterSpacing: '0.5px' }}>
               BungoEats
             </Typography>
-            <Button color="inherit" component={Link} to="/">
+            <Button color="inherit" component={Link} to="/" sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
               Home
             </Button>
-            <Button color="inherit" component={Link} to="/menu">
+            <Button color="inherit" component={Link} to="/menu" sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
               Menu
             </Button>
-            <Button color="inherit" component={Link} to="/cart">
+            <Button color="inherit" component={Link} to="/cart" sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
               Cart
             </Button>
             {user ? (
               <>
-                <Button color="inherit" component={Link} to="/orders">
+                <Button color="inherit" component={Link} to="/orders" sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
                   My Orders
                 </Button>
-                <Button color="inherit" onClick={() => setUser(null)}>
+                <Button color="inherit" onClick={() => setUser(null)} sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
                   Logout
                 </Button>
               </>
             ) : (
               <>
-                <Button color="inherit" component={Link} to="/login">
+                <Button color="inherit" component={Link} to="/login" sx={{ mx: 0.5, textTransform: 'none', fontSize: '1rem' }}>
                   Login
                 </Button>
-                <Button color="inherit" component={Link} to="/register">
-                  Register
+                <Button 
+                  variant="contained" 
+                  component={Link} 
+                  to="/register" 
+                  sx={{ 
+                    mx: 0.5, 
+                    textTransform: 'none', 
+                    fontSize: '1rem',
+                    backgroundColor: 'white',
+                    color: '#D62300',
+                    '&:hover': {
+                      backgroundColor: '#FFF5F0'
+                    }
+                  }}
+                >
+                  Sign Up
                 </Button>
               </>
             )}
@@ -77,7 +91,7 @@ function App() {
             py: 3,
             px: 2,
             mt: 'auto',
-            backgroundColor: '#2c3e50',
+            backgroundColor: '#D62300',
             color: 'white',
             textAlign: 'center'
           }}

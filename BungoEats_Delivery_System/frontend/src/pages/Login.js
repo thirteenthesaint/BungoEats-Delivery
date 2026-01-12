@@ -45,14 +45,14 @@ function Login() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
-      <Card>
-        <CardContent sx={{ p: 4 }}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center', mb: 3 }}>
+      <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
+        <CardContent sx={{ p: 5 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, textAlign: 'center', mb: 4, color: '#1A1A1A' }}>
             Login to BungoEats
           </Typography>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 3 }}>
+            <Alert severity="error" sx={{ mb: 3, borderRadius: '12px' }}>
               {error}
             </Alert>
           )}
@@ -66,7 +66,13 @@ function Login() {
               value={formData.email}
               onChange={handleChange}
               required
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 3,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  bgcolor: 'white'
+                }
+              }}
             />
             <TextField
               fullWidth
@@ -76,7 +82,13 @@ function Login() {
               value={formData.password}
               onChange={handleChange}
               required
-              sx={{ mb: 3 }}
+              sx={{ 
+                mb: 4,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  bgcolor: 'white'
+                }
+              }}
             />
             <Button
               fullWidth
@@ -84,15 +96,24 @@ function Login() {
               variant="contained"
               size="large"
               disabled={loading}
+              sx={{
+                bgcolor: '#D62300',
+                '&:hover': { bgcolor: '#B01E00' },
+                borderRadius: '12px',
+                py: 1.5,
+                fontWeight: 600,
+                textTransform: 'none',
+                fontSize: '1rem'
+              }}
             >
               {loading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
 
-          <Box sx={{ mt: 3, textAlign: 'center' }}>
-            <Typography variant="body2">
+          <Box sx={{ mt: 4, textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Don't have an account?{' '}
-              <Link to="/register" style={{ color: '#1976d2', textDecoration: 'none' }}>
+              <Link to="/register" style={{ color: '#D62300', textDecoration: 'none', fontWeight: 600 }}>
                 Register here
               </Link>
             </Typography>
